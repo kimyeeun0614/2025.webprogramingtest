@@ -1,0 +1,28 @@
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  text-align: center;
+  transition: background-color 1s, color 1s;
+}
+
+.dark-mode {
+  background-color: #000;
+  color: #ff3333;
+}
+
+.light-mode {
+  background-color: #eaf6ff;
+  color: #0a0a0a;
+}
+
+button {
+  background-color: #222;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555;
+}
