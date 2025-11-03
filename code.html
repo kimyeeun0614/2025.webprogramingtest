@@ -2,12 +2,12 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>Code Portfolio</title>
+  <title>Interactive Code Portfolio</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>코드 포트폴리오</h1>
+    <h1>코드 체험 포트폴리오</h1>
     <nav>
       <a href="index.html">Home</a>
       <a href="#c">C</a>
@@ -18,65 +18,74 @@
   </header>
 
   <main>
-    <!-- 🧩 C언어 섹션 -->
+
+    <!-- C언어 체험 -->
     <section id="c">
-      <h2>C언어</h2>
+      <h2>C언어 체험</h2>
       <pre><code>
-#include <stdio.h>
-int main() {
+#include &lt;stdio.h&gt;
+int main() 
+{
     printf("Hello, World!");
     return 0;
 }
       </code></pre>
-      <p>▶ 콘솔 출력과 기초 문법을 학습하며 C언어의 구조를 이해했습니다.</p>
+      <button onclick="runC()">실행하기</button>
+      <div class="console" id="consoleC">결과 보기</div>
     </section>
 
-    <!-- 🌐 HTML 섹션 -->
+    <!-- HTML 체험 -->
     <section id="html">
-      <h2>HTML</h2>
-      <pre><code>
-&lt;h1&gt;나의 첫 번째 웹페이지&lt;/h1&gt;
-&lt;p&gt;HTML은 웹의 구조를 만드는 언어입니다.&lt;/p&gt;
-      </code></pre>
-      <p>▶ HTML을 이용해 페이지 구조를 설계했습니다.</p>
+      <h2>HTML 체험</h2>
+      <p>아래에 HTML 코드를 입력하고 결과를 확인해보세요 </p>
+      <textarea id="htmlInput" rows="5" cols="40">
+<h3>안녕하세요</h3>
+<p>이건 HTML 출력 예시입니다.</p>
+      </textarea><br>
+      <button onclick="showHTML()">결과 보기</button>
+      <div class="result-box" id="htmlOutput"></div>
     </section>
 
-    <!-- 🎨 CSS 섹션 -->
+    <!-- CSS 체험 -->
     <section id="css">
-      <h2>CSS</h2>
-      <pre><code>
-body {
-  background-color: #0d1117;
-  color: #c9d1d9;
-  font-family: 'Segoe UI';
-}
-h1 {
-  color: #58a6ff;
-}
-      </code></pre>
-      <p>▶ CSS로 색상, 글꼴, 여백 등 시각적 디자인을 적용했습니다.</p>
+      <h2>CSS 색상 체험</h2>
+      <p>배경색을 바꿔보세요 </p>
+      <button onclick="changeColor('#58a6ff')">파란색</button>
+      <button onclick="changeColor('#ff7675')">분홍색</button>
+      <button onclick="changeColor('#0d1117')">원래대로</button>
     </section>
 
-    <!-- ⚙️ JavaScript 섹션 -->
+    <!-- JavaScript 체험 -->
     <section id="js">
-      <h2>JavaScript</h2>
-      <pre><code>
-function greeting() {
-  alert("안녕하세요, 김예은입니다!");
-}
-      </code></pre>
-      <button onclick="greeting()">실행하기</button>
-      <p>▶ JavaScript로 버튼 클릭 시 동작하는 간단한 기능을 구현했습니다.</p>
+      <h2>JavaScript 체험</h2>
+      <p>버튼을 클릭하면 자바스크립트가 작동합니다.</p>
+      <button onclick="runJS()">실행하기</button>
     </section>
+
   </main>
 
-  <footer>
-    <p>© 2025 Kim Yeeun | Tech & Security Portfolio</p>
-  </footer>
-
   <script>
-    function greeting() {
-      alert("안녕하세요, 김예은입니다!");
+    // C 언어 체험 (가상 콘솔)
+    function runC() {
+      const consoleC = document.getElementById('consoleC');
+      consoleC.textContent = "실행 결과: Hello, World!";
+      consoleC.style.color = "#58a6ff";
+    }
+
+    // HTML 체험
+    function showHTML() {
+      const input = document.getElementById('htmlInput').value;
+      document.getElementById('htmlOutput').innerHTML = input;
+    }
+
+    // CSS 색상 변경
+    function changeColor(color) {
+      document.body.style.backgroundColor = color;
+    }
+
+    // JS 실행
+    function runJS() {
+      alert("JavaScript 실행 성공! 🎉");
     }
   </script>
 </body>
