@@ -2,67 +2,101 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>Interactive Code Portfolio</title>
+  <title>Code Overview | 김예은</title>
   <link rel="stylesheet" href="style.css">
   <script defer src="script.js"></script>
 </head>
 <body>
   <header>
-    <h1>코드 체험 포트폴리오</h1>
+    <h1>배운 언어 소개</h1>
+    <p>제가 공부하고 만든 코드들을 소개합니다</p>
     <nav>
       <a href="index.html">Home</a>
-      <a href="#c">C</a>
-      <a href="#html">HTML</a>
-      <a href="#css">CSS</a>
-      <a href="#js">JavaScript</a>
+      <a href="code.html">Code</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="playground.html">Playground</a>
     </nav>
   </header>
 
   <main>
 
-    <!-- C언어 체험 -->
-    <section id="c">
-      <h2>C언어 체험</h2>
-      <pre><code>
-#include &lt;stdio.h&gt;
-int main() 
-{
-    printf("Hello, World!");
+    <!-- C언어 소개 -->
+    <section id="c" class="code-preview">
+      <h2>C언어</h2>
+      <p>프로그래밍의 기초 변수, 함수, 조건문, 반복문 등을 공부함</p>
+      <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Hello, World!\n");
     return 0;
 }
       </code></pre>
-      <button onclick="runC()">실행하기</button>
-      <div class="console" id="consoleC">결과 보기</div>
+      <p class="output-example">출력 : <span>Hello, World!</span></p>
+      <div class="btn-group">
+        <a href="portfolio.html#c-projects" class="btn">완성 프로젝트 보기</a>
+      </div>
     </section>
 
-    <!-- HTML 체험 -->
-    <section id="html">
-      <h2>HTML 체험</h2>
-      <p>아래에 HTML 코드를 입력하고 결과를 확인해보세요 </p>
-      <textarea id="htmlInput" rows="5" cols="40">
-<h3>안녕하세요</h3>
-<p>이건 HTML 출력 예시입니다.</p>
-      </textarea><br>
-      <button onclick="showHTML()">결과 보기</button>
-      <div class="result-box" id="htmlOutput"></div>
+    <!-- HTML 소개 -->
+    <section id="html" class="code-preview">
+      <h2>HTML</h2>
+      <p>웹페이지의 구조를 만드는 마크업 언어임. 다양한 태그로 콘텐츠를 구성할 수 있음.</p>
+      <pre><code>&lt;h1&gt;안녕하세요&lt;/h1&gt;
+&lt;p&gt;이것은 단락입니다.&lt;/p&gt;
+&lt;a href="#"&gt;링크&lt;/a&gt;
+      </code></pre>
+      <div class="preview-box">
+        <h3>안녕하세요</h3>
+        <p>이것은 단락입니다.</p>
+        <a href="#">링크</a>
+      </div>
+      <div class="btn-group">
+        <a href="portfolio.html#html-projects" class="btn">작품 보기</a>
+        <a href="playground.html#html-editor" class="btn btn-primary">직접 해보기</a>
+      </div>
     </section>
 
-    <!-- CSS 체험 -->
-    <section id="css">
-      <h2>CSS 색상 체험</h2>
-      <p>배경색을 바꿔보세요 </p>
-      <button onclick="changeColor('#58a6ff')">파란색</button>
-      <button onclick="changeColor('#ff7675')">분홍색</button>
-      <button onclick="changeColor('#0d1117')">원래대로</button>
+    <!-- CSS 소개 -->
+    <section id="css" class="code-preview">
+      <h2>CSS</h2>
+      <p>HTML 요소에 스타일을 입히는 언어임. 색상, 크기, 레이아웃을 디자인힐 수 있음</p>
+      <pre><code>.box {
+    background-color: #58a6ff;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+      </code></pre>
+      <div class="preview-box">
+        <div style="background-color: #58a6ff; padding: 20px; border-radius: 10px; color: white; text-align: center;">
+          CSS로 스타일링한 박스
+        </div>
+      </div>
+      <div class="btn-group">
+        <a href="portfolio.html#css-projects" class="btn">디자인 작품 보기</a>
+        <a href="playground.html#css-editor" class="btn btn-primary">직접 꾸며보기</a>
+      </div>
     </section>
 
-    <!-- JavaScript 체험 -->
-    <section id="js">
-      <h2>JavaScript 체험</h2>
-      <p>버튼을 클릭하면 자바스크립트가 작동합니다.</p>
-      <button onclick="runJS()">실행하기</button>
-    </section>
+    <!-- JavaScript 소개 -->
+    <section id="js" class="code-preview">
+      <h2>JavaScript</h2>
+      <p>웹페이지에 동적인 기능을 추가하는 프로그래밍 언어임 버튼, 애니메이션 등을 구현함</p>
+      <pre><code>function greet() {
+    alert('안녕하세요!');
+}
 
+document.querySelector('button')
+    .addEventListener('click', greet);
+      </code></pre>
+      <div class="preview-box">
+        <button onclick="alert('JavaScript가 실행되었습니다!')" class="demo-btn">클릭해보세요</button>
+      </div>
+      <div class="btn-group">
+        <a href="portfolio.html#js-projects" class="btn">JavaScript 프로젝트 보기</a>
+        <a href="playground.html#js-editor" class="btn btn-primary">직접 코딩하기</a>
+      </div>
+    </section>
   </main>
 </body>
 </html>
