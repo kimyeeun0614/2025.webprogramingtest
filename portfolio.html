@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolio | 김예은</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>프로젝트 포트폴리오</h1>
+    <p>제가 만든 완성된 프로젝트들을 소개합니다</p>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="code.html">Code</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="playground.html">Playground</a>
+    </nav>
+    <nav class="sub-nav">
+      <a href="#c-projects">C언어 프로젝트</a>
+      <a href="#web-projects">Web 프로젝트</a>
+      <a href="#js-projects">JavaScript 프로젝트</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- C언어 프로젝트 -->
+    <section id="c-projects" class="portfolio-section">
+      <h2>C언어 프로젝트</h2>
+
+      <article class="project-card">
+        <h3>1. ATM 기기</h3>
+        <p class="project-desc"></p>
+        <div class="code-container">
+          <button class="copy-btn" onclick="copyCode(this)">복사하기</button>
+          <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+int balance = 50000;
+int menu, money;
+int password = 1234, inputPw;
+
+printf("=== 미니 ATM ===\n");
+printf("비밀번호 입력: ");
+scanf("%d", &inputPw);
+
+if (inputPw != password) {
+    printf("비밀번호 오류\n");
+    return 0;
+}
+
+while (1) {
+    printf("\n--- 메뉴 ---\n");
+    printf("1. 잔액 조회\n");
+    printf("2. 입금\n");
+    printf("3. 출금\n");
+    printf("4. 종료\n");
+    printf("선택: ");
+    scanf("%d", &menu);
+
+    switch (menu) {
+    case 1:
+        printf("현재 잔액: %d원\n", balance);
+        break;
+
+    case 2:
+        printf("입금 금액: ");
+        scanf("%d", &money);
+        balance += money;
+        printf("%d원 입금 완료\n", money);
+        break;
+
+    case 3:
+        printf("출금 금액: ");
+        scanf("%d", &money);
+        if (money > balance) {
+            printf("잔액 부족\n");
+        }
+        else {
+            balance -= money;
+            printf("%d원 출금 완료\n", money);
+        }
+        break;
+
+    case 4:
+        printf("ATM 종료\n");
+        return 0;
+
+    default:
+        printf("잘못 선택함\n");
+    }
+  }
+}
+</code></pre>
+        </div>
+        <div class="output">
+          <strong>실행 예시 결과</strong>
+          <p>
+          <pre>
+=== ATM ===
+비밀번호 입력: 1234
+
+--- 메뉴 ---
+1. 잔액 조회
+2. 입금
+3. 출금
+4. 종료
+선택: 1
+현재 잔액: 50000원
+          </pre>
+          </p>
+        </div>
+        <div class="output">
+          <strong>주요 기능</strong>
+          <p>
+            • 비밀번호 인증 <br>
+            • 잔액 조회, 입금, 출금 기능 <br>
+            • 잔액 부족 시 출금 불가 처리 <br>
+            • 무한 루프를 통한 반복 메뉴 제공
+          </p>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <h3>2. 간단한 계산기</h3>
+        <p class="project-desc">두 숫자를 입력받아 사칙연산을 수행합니다.</p>
+        <div class="code-container">
+          <button class="copy-btn" onclick="copyCode(this)">복사하기</button>
+          <pre><code>#include &lt;stdio.h&gt;
+
+// 함수 선언
+double add(double a, double b) { return a + b; }
+double sub(double a, double b) { return a - b; }
+double mul(double a, double b) { return a * b; }
+double divide(double a, double b) {
+    if (b == 0) {
+        printf("오류: 0으로 나눌 수 없습니다\n");
+        return 0;
+    }
+    return a / b;
+}
+double power(double a, double b) { return pow(a, b); }
+double mod(double a, double b) {
+    if ((int)b == 0) {
+        printf("오류: 0으로 나머지 연산을 할 수 없습니다\n");
+        return 0;
+    }
+    return (int)a % (int)b;
+}
+
+// 입력 버퍼 비우기
+void clearBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+int main() {
+    int menu;
+    double x, y;
+
+    double (*funcs[6])(double, double) = { add, sub, mul, divide, power, mod };
+
+    while (1) {
+        printf("\n=== 확장 계산기 ===\n");
+        printf("1. 더하기\n");
+        printf("2. 빼기\n");
+        printf("3. 곱하기\n");
+        printf("4. 나누기\n");
+        printf("5. 제곱(a^b)\n");
+        printf("6. 나머지(a %% b)\n");
+        printf("7. 종료\n");
+        printf("선택: ");
+
+        if (scanf("%d", &menu) != 1) {
+            printf("잘못된 입력 (숫자를 입력하세요)\n");
+            clearBuffer();
+            continue;
+        }
+
+        if (menu == 7) break;
+        if (menu < 1 || menu > 6) {
+            printf("없는 메뉴\n");
+            continue;
+        }
+
+        printf("첫 번째 숫자: ");
+        if (scanf("%lf", &x) != 1) {
+            printf("숫자만 입력 가능\n");
+            clearBuffer();
+            continue;
+        }
+
+        printf("두 번째 숫자: ");
+        if (scanf("%lf", &y) != 1) {
+            printf("숫자만 입력 가능\n");
+            clearBuffer();
+            continue;
+        }
+
+        printf("결과: %.4lf\n", funcs[menu - 1](x, y));
+    }
+
+    return 0;
+}</code></pre>
+        </div>
+        <div class="output">
+          <strong>실행 예시 결과</strong>
+          <p>
+          <pre>
+=== 확장 계산기 ===
+1. 더하기
+2. 빼기
+3. 곱하기
+4. 나누기
+5. 제곱(a^b)
+6. 나머지(a % b)
+7. 종료
+
+  선택: 1
+  첫 번째 숫자: 10
+  두 번째 숫자: 5
+  결과: 15.0000
+          </pre>
+          </p>
+        </div>
+        <div class="output">
+          <strong>주요 기능</strong>
+          <p>
+            • 코드 복사 기능 <br>
+            • 오류 처리 (0으로 나누기 등) <br>
+            • 함수 포인터 배열을 이용한 깔끔한 구조 <br>
+            • 더하기, 빼기, 곱하기, 나누기 등 다양한 연산
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <!-- HTML/CSS/JavaScript 프로젝트 -->
+    <section id="web-projects" class="portfolio-section">
+      <h2>웹 프로젝트</h2>
+
+      <article class="project-card">
+        <h3>1. Number Touch 게임</h3>
+        <p class="project-desc">순수 HTML, CSS, JS를 이용해 1~50 숫자를 순서대로 누르는 게임을 만들었습니다.</p>
+        <div class="code-container">
+          <button class="copy-btn" onclick="copyCode(this)">복사하기</button>
+          <pre><code>
+// JavaScript: 숫자 맞추기 게임 핵심 로직
+let numbers = [];
+let next = 1;
+
+// 1~25 숫자 섞기
+for (let i = 1; i <= 25; i++) numbers.push(i);
+numbers = numbers.sort(() => Math.random() - 0.5);
+
+function press(btn) {
+  const num = Number(btn.dataset.num);
+  
+  if (num !== next) {
+    // 틀린 경우 패널티
+    addedPenalty += 1;
+    return;
+  }
+  
+  // 정답: 25 이하면 +25 표시, 이상이면 숨김
+  if (num <= 25) {
+    btn.innerText = num + 25;
+    btn.dataset.num = num + 25;
+  } else {
+    btn.style.visibility = "hidden";
+  }
+  
+  next++;
+  
+  if (next > 50) {
+    alert("클리어!");
+  }
+}</code></pre>
+        </div>
+        <div class="output">
+          <strong>게임 특징:</strong>
+          <p>• 1~50 숫자를 순서대로 터치<br>
+            • 틀리면 시간 페널티 +1초<br>
+            • localStorage로 최고 기록 저장<br>
+            • 5×5 그리드 레이아웃</p>
+        </div>
+        <a href="https://webprogramming-4.github.io/number.game/" target="_blank" class="btn">게임 플레이하기 →</a>
+      </article>
+
+      <article class="project-card">
+        <h3>2. 랜덤 색상 생성기</h3>
+        <p class="project-desc">버튼을 누르면 랜덤 배경색이 생성되는 인터랙티브 웹페이지입니다.</p>
+        <div class="code-container">
+          <button class="copy-btn" onclick="copyCode(this)">복사하기</button>
+          <pre><code>&lt;div id="colorBox"&gt;
+  &lt;p id="colorCode"&gt;#58a6ff&lt;/p&gt;
+  &lt;button onclick="changeRandomColor()"&gt;색상 변경&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+function changeRandomColor() {
+  const randomColor = '#' + 
+    Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+  
+  document.getElementById('colorBox').style.backgroundColor = randomColor;
+  document.getElementById('colorCode').textContent = randomColor;
+}
+&lt;/script&gt;</code></pre>
+        </div>
+        <div class="preview">
+          <div id="demo-color-box"
+            style="background: #58a6ff; padding: 30px; border-radius: 10px; text-align: center; transition: background 0.3s;">
+            <p id="demo-color-code"
+              style="font-size: 1.5em; font-weight: bold; color: white; margin: 10px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+              #58a6ff</p>
+            <button onclick="demoChangeColor()"
+              style="background: white; color: #333; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">🎨
+              색상 변경</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <h3>3. 이 포트폴리오 웹사이트</h3>
+        <p class="project-desc">순수 HTML, CSS, JavaScript로 만든 인터랙티브 포트폴리오입니다.</p>
+        <div class="output">
+          <strong>주요 기능:</strong>
+          <p>• 코드 복사 기능<br>
+            • 반응형 디자인<br>
+            • 다크 모드 테마<br>
+            • 실시간 미리보기<br>
+            • 인터랙티브 데모</p>
+        </div>
+        <a href="https://github.com/kimyeeun0614/2025.webprogramingtest" target="_blank" class="btn">GitHub 저장소</a>
+      </article>
+    </section> <!-- JavaScript 프로젝트 -->
+    <section id="js-projects" class="portfolio-section">
+      <h2>JavaScript 프로젝트</h2>
+
+      <article class="project-card">
+        <h3>1. 디지털 시계</h3>
+        <p class="project-desc">실시간으로 현재 시간을 표시하는 디지털 시계입니다.</p>
+        <div class="code-container">
+          <button class="copy-btn" onclick="copyCode(this)">복사하기</button>
+          <pre><code>&lt;div id="clock"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+function updateClock() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  
+  document.getElementById('clock').textContent = 
+    `${hours}:${minutes}:${seconds}`;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+&lt;/script&gt;</code></pre>
+        </div>
+        <div class="preview">
+          <div id="live-clock"
+            style="font-size: 2.5em; font-weight: bold; text-align: center; color: #58a6ff; padding: 30px; background: #161b22; border-radius: 10px; font-family: 'Courier New', monospace;">
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <h3>2. To-Do List</h3>
+        <p class="project-desc">할 일을 추가하고 완료 처리할 수 있는 간단한 앱입니다.</p>
+        <div class="code-container">
+          <button class="copy-btn" onclick="copyCode(this)">복사하기</button>
+          <pre><code>&lt;div id="todo-app"&gt;
+  &lt;input type="text" id="todoInput" placeholder="할 일 입력"&gt;
+  &lt;button onclick="addTodo()"&gt;추가&lt;/button&gt;
+  &lt;ul id="todoList"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+function addTodo() {
+  const input = document.getElementById('todoInput');
+  const list = document.getElementById('todoList');
+  
+  if(input.value.trim() === '') return;
+  
+  const li = document.createElement('li');
+  li.textContent = input.value;
+  li.onclick = function() {
+    this.classList.toggle('completed');
+  };
+  
+  list.appendChild(li);
+  input.value = '';
+}
+&lt;/script&gt;</code></pre>
+        </div>
+      </article>
+    </section>
+
+    <section class="cta-section">
+      <h2>직접 코드를 작성해보고 싶으신가요?</h2>
+      <p>플레이그라운드에서 자유롭게 코딩해보세요!</p>
+      <a href="playground.html" class="btn btn-large">Playground로 가기</a>
+    </section>
+  </main>
+  <footer>
+    <p>© 2025 김예은 | IT학부</p>
+  </footer>
+</body>
+
+</html>
