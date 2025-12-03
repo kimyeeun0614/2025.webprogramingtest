@@ -12,11 +12,17 @@
   <header>
     <h1>배운 언어 소개</h1>
     <p>제가 공부하고 만든 코드들을 소개합니다</p>
-    <nav>
+    <nav class="main-nav">
       <a href="index.html">Home</a>
       <a href="code.html">Code</a>
       <a href="portfolio.html">Portfolio</a>
       <a href="playground.html">Playground</a>
+    </nav>
+    <nav class="sub-nav">
+      <a href="#c">C언어</a>
+      <a href="#html">HTML</a>
+      <a href="#css">CSS</a>
+      <a href="#js">JavaScript</a>
     </nav>
   </header>
 
@@ -26,13 +32,16 @@
     <section id="c" class="code-preview">
       <h2>C언어</h2>
       <p>프로그래밍의 기초 변수, 함수, 조건문, 반복문 등을 공부함</p>
-      <pre><code>#include &lt;stdio.h&gt;
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">복사하기</button>
+        <pre><code>#include &lt;stdio.h&gt;
 
 int main() {
     printf("Hello, World!\n");
     return 0;
 }
-      </code></pre>
+        </code></pre>
+      </div>
       <p class="output-example">출력 : <span>Hello, World!</span></p>
       <div class="btn-group">
         <a href="portfolio.html#c-projects" class="btn">완성 프로젝트 보기</a>
@@ -43,15 +52,19 @@ int main() {
     <section id="html" class="code-preview">
       <h2>HTML</h2>
       <p>웹페이지의 구조를 만드는 마크업 언어임. 다양한 태그로 콘텐츠를 구성할 수 있음.</p>
-      <pre><code>&lt;h1&gt;안녕하세요&lt;/h1&gt;
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">복사하기</button>
+        <pre><code>&lt;h1&gt;안녕하세요&lt;/h1&gt;
 &lt;p&gt;이것은 단락입니다.&lt;/p&gt;
 &lt;a href="#"&gt;antifreeze - 백예린&lt;/a&gt;
-      </code></pre>
-      <div class="preview-box">
-        <h3>안녕하세요</h3>
-        <p>이것은 단락입니다.</p>
+        </code></pre>
+      </div>
+      <div class="link">
+        <p class="exception">출력</p>
+        <h3>• 안녕하세요</h3>
+        <p>• 이것은 단락입니다.</p>
         <a href="https://www.youtube.com/watch?v=F_ZNIXPcuig" target="_blank">
-          antifreeze - 백예린
+          • antifreeze - 백예린
         </a>
       </div>
       <br>
@@ -65,34 +78,40 @@ int main() {
     <section id="css" class="code-preview">
       <h2>CSS</h2>
       <p>HTML 요소에 스타일을 입히는 언어임. 색상, 크기, 레이아웃을 디자인힐 수 있음</p>
-      <pre><code>.box {
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">복사하기</button>
+        <pre><code>.box {
     background-color: #58a6ff;
     padding: 20px;
     border-radius: 10px;
     color: white;
 }
-      </code></pre>
+        </code></pre>
+      </div>
       <div class="preview-box">
         <div style="background-color: #58a6ff; padding: 20px; border-radius: 10px; color: white; text-align: center;">
           CSS로 스타일링한 박스
-      </div>
-      <div class="btn-group">
-        <a href="portfolio.html#css-projects" class="btn">디자인 작품 보기</a>
-        <a href="playground.html#css-editor" class="btn btn-primary">직접 꾸며보기</a>
-      </div>
+        </div>
+        <div class="btn-group">
+          <a href="portfolio.html#css-projects" class="btn">디자인 작품 보기</a>
+          <a href="playground.html#css-editor" class="btn btn-primary">직접 꾸며보기</a>
+        </div>
     </section>
 
     <!-- JavaScript 소개 -->
     <section id="js" class="code-preview">
       <h2>JavaScript</h2>
       <p>웹페이지에 동적인 기능을 추가하는 프로그래밍 언어임 버튼, 애니메이션 등을 구현함</p>
-      <pre><code>function greet() {
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">복사하기</button>
+        <pre><code>function greet() {
     alert('안녕하세요!');
 }
 
 document.querySelector('button')
     .addEventListener('click', greet);
-      </code></pre>
+        </code></pre>
+      </div>
       <div class="preview-box">
         <button onclick="alert('JavaScript가 실행되었습니다!')" class="demo-btn">클릭해보세요</button>
       </div>
@@ -104,6 +123,6 @@ document.querySelector('button')
   </main>
 </body>
 <footer>
-  <p>© 2025 김예은 | IT학부</p>
+  <p>@ 2025 김예은 | IT학부</p>
 </footer>
 </html>
