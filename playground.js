@@ -290,24 +290,35 @@ calcBtn.addEventListener('click', () => {
   }
 };
 
+// ========================================
+// 헬퍼 함수
+// 요소 가져오기 (짧게)
+const $ = (id) => document.getElementById(id);
+// 값 표시 업데이트
+const updateDisplay = (id, value, unit = '') => {
+  const el = $(id);
+  if (el) el.textContent = value + unit;
+};
+
+// 코드 에디터 함수들
 // 템플릿 로드
 function loadTemplate(templateName) {
   const template = templates[templateName];
-  if (template) {
-    document.getElementById('html-editor').value = template.html;
-    document.getElementById('css-editor').value = template.css;
-    document.getElementById('js-editor').value = template.js;
-    runCode();
-  }
+  if (!template) return;
+  
+  $('html-editor').value = template.html;
+  $('css-editor').value = template.css;
+  $('js-editor').value = template.js;
+  runCode();
 }
 
 // 코드 실행
 function runCode() {
-  const htmlCode = document.getElementById('html-editor').value;
-  const cssCode = document.getElementById('css-editor').value;
-  const jsCode = document.getElementById('js-editor').value;
+  const htmlCode = $('html-editor').value;
+  const cssCode = $('css-editor').value;
+  const jsCode = $('js-editor').value;
   
-  const previewFrame = document.getElementById('preview-frame');
+  const previewFrame = $('preview-frame');
   const preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
   
   preview.open();
@@ -316,21 +327,16 @@ function runCode() {
     <html>
     <head>
       <style>
-        body {
-          margin: 0;
-          padding: 20px;
-          font-family: 'Segoe UI', sans-serif;
-        }
+        body { margin: 0; padding: 20px; font-family: 'Segoe UI', sans-serif; }
         ${cssCode}
       </style>
     </head>
     <body>
       ${htmlCode}
       <script>
-        try {
-          ${jsCode}
-        } catch(e) {
-          document.body.innerHTML += '<div style="color: red; padding: 20px; background: #fee; border: 2px solid red; margin-top: 20px;">오류: ' + e.message + '</div>';
+        try { ${jsCode} } 
+        catch(e) { 
+          document.body.innerHTML += '<div style="color: red; padding: 20px; background: #fee; border: 2px solid red; margin-top: 20px;">오류: ' + e.message + '</div>'; 
         }
       <\/script>
     </body>
@@ -339,48 +345,90 @@ function runCode() {
   preview.close();
 }
 
-// 미리보기 새로고침
+// 새로고침
 function refreshPreview() {
   runCode();
 }
 
-// 전체 초기화
+// 초기화
 function clearAll() {
-  if (confirm('모든 코드를 지우시겠습니까 ?')) {
-    document.getElementById('html-editor').value = '';
-    document.getElementById('css-editor').value = '';
-    document.getElementById('js-editor').value = '';
-    const previewFrame = document.getElementById('preview-frame');
+  if (confirm('모든 코드를 지우시겠습니까?')) {
+    $('html-editor').value = '';
+    $('css-editor').value = '';
+    $('js-editor').value = '';
+    
+    const previewFrame = $('preview-frame');
     const preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
     preview.open();
     preview.write('');
     preview.close();
+    
+// LocalStorage도 초기화
+    localStorage.removeItem('playground-html');
+    localStorage.removeItem('playground-css');
+    localStorage.removeItem('playground-js');
+  }
+}
+
+// LocalStorage 자동 저장
+function saveToLocalStorage() {
+  const htmlEditor = $('html-editor');
+  if (htmlEditor) {
+    localStorage.setItem('playground-html', htmlEditor.value);
+    localStorage.setItem('playground-css', $('css-editor').value);
+    localStorage.setItem('playground-js', $('js-editor').value);
+  }
+}
+
+// LocalStorage에서 불러오기
+function loadFromLocalStorage() {
+  const htmlEditor = $('html-editor');
+  if (!htmlEditor) return false;
+  
+  const savedHTML = localStorage.getItem('playground-html');
+  const savedCSS = localStorage.getItem('playground-css');
+  const savedJS = localStorage.getItem('playground-js');
+  
+  if (savedHTML || savedCSS || savedJS) {
+    htmlEditor.value = savedHTML || '';
+    $('css-editor').value = savedCSS || '';
+    $('js-editor').value = savedJS || '';
+    runCode();
+    return true; // 저장 코드
+  }
+  return false; // 저장 안한 코드
+}
+
+// 에디터 입력 자동 저장
+function setupAutoSave() {
+  const htmlEditor = $('html-editor');
+  if (htmlEditor) {
+    htmlEditor.addEventListener('input', saveToLocalStorage);
+    $('css-editor').addEventListener('input', saveToLocalStorage);
+    $('js-editor').addEventListener('input', saveToLocalStorage);
   }
 }
 
 // 키보드 단축키: Ctrl + Enter로 실행
 document.addEventListener('keydown', (e) => {
-  if (e.ctrlKey && e.key === 'Enter') {
-    runCode();
-  }
+  if (e.ctrlKey && e.key === 'Enter') runCode();
 });
 
-// 페이지 로드 시 첫 번째 템플릿 로드
+// 페이지 로드 초기화
 window.addEventListener('load', () => {
-  const htmlEditor = document.getElementById('html-editor');
+  const htmlEditor = $('html-editor');
   if (htmlEditor) {
     // 코드 에디터 페이지
-    loadTemplate('hello');
+    setupAutoSave();
+    if (!loadFromLocalStorage()) loadTemplate('hello');
   } else {
     // 체험하기 페이지
     initInteractive();
   }
 });
 
-// ======================================
-// 체험하기 페이지 함수들
-// ======================================
-
+// ========================================
+// 체험하기 페이지
 // 초기화
 function initInteractive() {
   // 초기 팔레트 생성
@@ -389,7 +437,6 @@ function initInteractive() {
   }
 }
 
-// 버튼 업데이트
 // 버튼 업데이트
 function updateButton() {
   const btn = document.getElementById('demo-button');
@@ -533,7 +580,7 @@ function calculate() {
   document.getElementById('calc-result').textContent = typeof result === 'number' ? result.toFixed(2) : result;
 }
 
-// 그라디언트 업데이트
+// 그라3ㅔ이션 업데이트
 function updateGradient() {
   const gradientBox = document.getElementById('gradient-box');
   const color1 = document.getElementById('grad-color1').value;
@@ -543,7 +590,7 @@ function updateGradient() {
   gradientBox.style.background = `linear-gradient(${direction}, ${color1}, ${color2})`;
 }
 
-// 랜덤 그라디언트
+// 랜덤 그라데이션
 function randomGradient() {
   const randomColor1 = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
   const randomColor2 = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
